@@ -1,0 +1,108 @@
+create table Inquilino(
+	id_inquilino varchar (50),
+	nombre varchar (50),
+	apellido varchar (50),
+	edad varchar (50),
+	genero char,
+	nro_contrato varchar (50),
+	constraint pk_inquilino primary key (id_inquilino),
+	constraint fk_Contrato foreign key (nro_contrato) references Contrato (nro_contrato)
+
+)
+
+create table Inmueble(
+	cod_tipo_inmueble varchar (50),
+	ciudad varchar (50),
+	direccion varchar (50),
+	barrio varchar (50),
+	piso varchar (50),
+	num_apto varchar (50),
+	num_local varchar
+	constraint pk_inmueble primary key (cod_tipo_inmueble),
+	constraint fk_TipoInmueble foreign key (cod_tipo_inmueble) references TipoInmueble (cod_tipo_inmueble)
+)
+
+create table TipoInmueble(
+	cod_tipo_inmueble varchar (50),
+	descripcion varchar (100),
+	contraint pk_cod_tipo_inmueble primary key (cod_tipo_inmueble)
+)
+
+create table Contrato(
+	nro_contrato varchar (50),
+	descripcion varchar (50),
+	fecha_inicio date,
+	tarifa int,
+	duracion int,
+	cod_inmueble varchar (50),
+	constraint pk_contrato primary key (nro_contrato),
+	constraint fk_Inmueble foreign key (cod_inmueble) references Inmueble (cod_tipo_inmueble)
+)
+
+create table Recibo(
+	nro_recibo varchar (50),
+	cod_tipo_movimiento varchar (50),
+	cod_tipo_inmueble varchar (50),
+	cod_servicio varchar (50),
+	iva int,
+	total int,
+	fecha date,
+	tarifa int,	
+	nro_contrato varchar (50),
+	cod_servicio varchar (50),
+	nro_movimiento varchar (50),
+	constraint pk_nro_recibo primary key (nro_recibo),
+	constraint fk_contrato foreign key (nro_contrato) references Contrato (nro_contrato),
+	constraint fk_servicio foreign key (cod_servicio) references TipoServicio (cod_servicio),
+	constraint fk_movimiento foreign key (cod_movimiento) references Movimiento (nro_movimiento)
+)
+
+create table TipoServicio(
+	cod_servicio varchar (50),
+	descripcion varchar (50),
+	ipc int,
+	constraint pk_cod_servicio primary key (cod_servicio)
+)
+
+create table Movimiento(
+	nro_moviemiento varchar (50),
+	cod_tipo_movimiento (50),
+	fecha date,
+	cod_inmueble varchar (50),
+	cod_tipo_movimiento varchar (50),
+	constraint pk_nro_movimiento primary key (nro_movimiento),
+	constraint fk_inmueble foreign key (cod_inmueble) references Inmueble (cod_tipo_inmueble),
+	constraint fk_tipo_moviemiento foreign key (cod_tipo_movimiento) references TipoMovimiento (cod_tipo_movimiento)
+)
+
+create table TipoMovimiento(
+	cod_tipo_movimiento varchar (50),
+	descripcion varchar (100),
+	contraint pk_cod_tipo_movimiento primary key (cod_tipo_movimiento)
+)
+
+create table Cuenta(
+	nro_cuenta varchar (50),
+	titular varchar (50),
+	saldo int,
+	fecha date,
+	cod_banco varchar (50),
+	constraint pk_nro_cuenta primary key (nro_cuenta),
+	constraint fk_banco foreign key (cod_banco) references Banco (cod_banco)
+)
+
+create table Banco(
+	cod_banco varchar (50),
+	nombre_banco varchar (50),
+	cod_sucursal varchar (50),
+	constraint pk_cod_banco primary key (cod_banco)
+	constraint fk_Sucursal foreign key (cod_sucursal) references Sucursal (cod_sucursal)
+)
+
+create table Sucursal(
+	cod_sucursal varchar (50),
+	nombre_sucursal varchar (50),
+	ciudad varchar (50),
+	direccion varchar (50)
+	constraint pk_cod_sucursal primary key (cod_sucursal)
+)
